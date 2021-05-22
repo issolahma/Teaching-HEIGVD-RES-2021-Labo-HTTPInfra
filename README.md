@@ -20,3 +20,19 @@ docker-images/
 
 ````
 
+
+
+# Step 2
+
+````
+express-image/
+├── Dockerfile
+└── src
+    ├── index.js
+    ├── node_modules
+    │   └── chance
+    ├── package.json
+    └── package-lock.json
+
+````
+
