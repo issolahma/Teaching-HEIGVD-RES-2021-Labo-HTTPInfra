@@ -1,5 +1,7 @@
 FROM php:7.2-apache
 
+RUN apt update && apt install -y vim
+
 # copy content to
 COPY conf/ /etc/apache2/
 

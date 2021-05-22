@@ -4,6 +4,13 @@ Par: Godi Matthieu et Issolah Maude
 
 
 
+````
+docker-compose up --detach
+docker exec -it <nom_de_la_machine> /bin/bash
+````
+
+
+
 ## Step 1 -  Serveur HTTP statique avec apache httpd
 
 Arborescence du projet http.

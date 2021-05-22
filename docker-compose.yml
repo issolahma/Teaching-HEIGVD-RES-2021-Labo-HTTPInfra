@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+    http:
+        privileged: true
+        container_name : res_http
+        hostname: res.http
+        build: docker-images/apache-php-image/
+
+    express:
+        privileged: true
+        container_name : res_express
+        hostname : res.express
+        build: express-image/
+
+    reverse-proxy:
+        privileged: true
+        container_name : res_proxy
+        hostname : res.proxy
+        build: apache-reverse-proxy/      
+
+    
