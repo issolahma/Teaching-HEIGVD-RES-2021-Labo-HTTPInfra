@@ -6,8 +6,25 @@ juin 2021
 
 
 
-````
+## Arborescence du dossier de travail final
+
+````bash
+labo-http
+└── Teaching-HEIGVD-RES-2021-Labo-HTTPInfra
+    ├── apache-reverse-proxy # Dossier conf. Docker
+    ├── docker-images        # Dossier conf. Docker
+    ├── express-image        # Dossier conf. Docker
+ 	├── figures              # Images du readme
+    ├── LICENSE
+    |
+    ├── cleanLab			 # Script qui supprime les images et containers créés
+    ├── docker-compose.yml   # Configuration pour la création de touts les containers
+    └── README.md            # Rapport
+
+
+# Création et execuion des conntainers
 docker-compose up --detach
+# Execution de bash dans le container
 docker exec -it <nom_de_la_machine> /bin/bash
 ````
 
@@ -52,7 +69,7 @@ https://startbootstrap.com/theme/grayscale
 
 ## Step 2 - Serveur dynamique HTTP avec express.js
 
-Nous avons choisis de retourner des addresses.
+Nous avons choisis de retourner des adresses.
 
 ````javascript
 # Extrait du fichier index.js
@@ -175,7 +192,7 @@ setInterval(loadAddresses, 2000);
 
 - Modification du template Bootstrap
 
-  Pour pouvoir recopier le code exemple du cours, nous avons ajouté une clases `skills` au paragraphe qui affiche les addresses.
+  Pour pouvoir recopier le code exemple du cours, nous avons ajouté une classe `skills` au paragraphe qui affiche les adresses.
 
   Nous avons aussi du ajouter un lien vers les libs JQuery pour que notre script puisse fonctionner.
 
@@ -203,7 +220,7 @@ setInterval(loadAddresses, 2000);
 
 A ce stade nous avons décider de créer un fichier docker-compose pour faciliter la création des containers.
 
-Pour suivre l'exemple du cours et utiliser des variables d'environnement, nous avons assigné une ip fixe a chaques container.
+Pour suivre l'exemple du cours et utiliser des variables d'environnement, nous avons assigné une IP fixe a chaque container.
 
 - Fichier docker-compose.yml
 
@@ -402,7 +419,7 @@ Il est possible de le configurer pour limiter son accès avec un login (voir le 
 
 ## Bonus - Management UI
 
-Portainer.io permet de gerer facilement son environnement Docker.
+Portainer.io permet de gérer facilement son environnement Docker.
 
 https://www.portainer.io/
 
