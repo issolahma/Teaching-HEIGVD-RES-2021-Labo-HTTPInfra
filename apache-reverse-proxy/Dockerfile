@@ -8,7 +8,7 @@ COPY templates/ /var/apache2/
 # copy content to
 COPY conf/ /etc/apache2/
 
-RUN a2enmod proxy proxy_http
+RUN a2enmod proxy proxy_http proxy_balancer lbmethod_bytraffic lbmethod_byrequests headers
 RUN a2ensite 000-* 001-*
 
 # docker build -t res/apache_rp .
