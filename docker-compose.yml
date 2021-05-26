@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+
+  rproxy:
+    privileged: true
+    container_name : rproxy
+    build: apache-reverse-proxy/
+    networks:
+      lan:
+        ipv4_address: 173.17.0.4
+
+  web:
+    privileged: true
+    container_name : web
+    build: docker-images/apache-php-image/
+    networks:
+      lan:
+        ipv4_address: 173.17.0.2
+
+  express:
+    privileged: true
+    container_name : express
+    build: express-image/
+    networks:
+      lan:
+        ipv4_address: 173.17.0.3
+
+networks:
+  lan:
+    driver: bridge
+    ipam:
+      config:    
+        - subnet: 173.17.0.0/24
+
