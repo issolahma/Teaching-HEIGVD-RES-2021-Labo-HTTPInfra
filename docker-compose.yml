@@ -3,49 +3,53 @@ version: '3.9'
 services:
     http1:
         privileged: true
-        container_name : res_http_one
+        container_name : res.http1
         hostname: res.http1
         build: docker-images/apache-php-image/
         networks:
-            default:
-                ipv4_address: 172.18.0.3
+            lan:
+                ipv4_address: 173.17.0.5
     http2:
         privileged: true
-        container_name : res_http_two
+        container_name : res.http2
         hostname: res.http2
         build: docker-images/apache-php-image/
         networks:
-            default:
-                ipv4_address: 172.18.0.4
+            lan:
+                ipv4_address: 173.17.0.6
 
 
     express1:
         privileged: true
-        container_name : res_express_one
+        container_name : res.express1
         hostname : res.express1
         build: express-image/
         networks:
-            default:
-                ipv4_address: 172.18.0.5
+            lan:
+                ipv4_address: 173.17.0.7
     express2:
         privileged: true
-        container_name : res_express_two
+        container_name : res.express2
         hostname : res.express2
         build: express-image/
         networks:
-            default:
-                ipv4_address: 172.18.0.6
+            lan:
+                ipv4_address: 173.17.0.8
 
     reverse-proxy:
         privileged: true
-        container_name : res_proxy
+        container_name : res.proxy
         hostname : res.proxy
         build: apache-reverse-proxy/
         networks:
-            default:
-                ipv4_address: 172.18.0.2   
-        environment: 
-            - STATIC_APP=172.18.0.3:80
-            - DYNAMIC_APP=172.18.0.5:3000
+            lan:
+                ipv4_address: 173.17.0.4
+
+networks:
+  lan:
+    driver: bridge
+    ipam:
+      config:    
+        - subnet: 173.17.0.0/24 
 
 # docker-compose up --detach   

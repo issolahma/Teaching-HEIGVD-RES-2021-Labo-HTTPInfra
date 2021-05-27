@@ -2,9 +2,6 @@ FROM php:7.2-apache
 
 RUN apt update && apt install -y vim
 
-COPY apache2-foreground /usr/local/bin
-COPY templates/ /var/apache2/
-
 # copy content to
 COPY conf/ /etc/apache2/
 
