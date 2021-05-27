@@ -78,6 +78,7 @@ services:
   traefik:
     # The official v2 Traefik docker image
     image: traefik:v2.4
+    privileged: true
     container_name: traefik
     networks:
       - lan

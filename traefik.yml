@@ -1,8 +1,6 @@
 log:
   level: INFO
 
-#tracing: {}
-
 api:
   insecure: true
   dashboard: true
