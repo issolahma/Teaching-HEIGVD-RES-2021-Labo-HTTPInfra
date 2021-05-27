@@ -1,55 +1,96 @@
-version: '3.9'
+version: '3'
 
 services:
-    http1:
-        privileged: true
-        container_name : res.http1
-        hostname: res.http1
-        build: docker-images/apache-php-image/
-        networks:
-            lan:
-                ipv4_address: 173.17.0.5
-    http2:
-        privileged: true
-        container_name : res.http2
-        hostname: res.http2
-        build: docker-images/apache-php-image/
-        networks:
-            lan:
-                ipv4_address: 173.17.0.6
+  http1:
+    privileged: true
+    container_name : res.http1
+    hostname: res.http1
+    build: docker-images/apache-php-image/
+    networks:
+      - lan
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.http1.entrypoints=http"
+      - "traefik.http.routers.http1.rule=Host(`demo.res.com`)"
+      - "traefik.http.routers.http1.service=demores"
+      - "traefik.http.services.demores.loadbalancer.server.port=80"
+      - "traefik.http.services.demores.loadbalancer.sticky.cookie={}"
+      - "traefik.docker.network=lan"
+                
+  http2:
+    privileged: true
+    container_name : res.http2
+    hostname: res.http2
+    build: docker-images/apache-php-image/
+    networks:
+      - lan
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.http2.entrypoints=http"
+      - "traefik.http.routers.http2.rule=Host(`demo.res.com`)"
+      - "traefik.http.routers.http2.service=demores"
+      - "traefik.http.services.demores.loadbalancer.server.port=80"
+      - "traefik.http.services.demores.loadbalancer.sticky.cookie={}"
+      - "traefik.docker.network=lan"
+                
+  express1:
+    privileged: true
+    container_name : res.express1
+    hostname : res.express1
+    build: express-image/
+    networks:
+      - lan
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.express1.entrypoints=http"
+      - "traefik.http.routers.express1.rule=Host(`demo.res.com`) && Path(`/api/students/`)"
+      - "traefik.http.routers.express1.service=addresses"
+      # Create a middleware 
+      - "traefik.http.middlewares.replace-path.replacepath.path=/"
+      # Apply the middleware 
+      - "traefik.http.routers.express1.middlewares=replace-path"
+      # connect the route to express1:3000
+      - "traefik.http.services.addresses.loadbalancer.server.port=3000"
+      - "traefik.http.services.addresses.loadbalancer.sticky.cookie={}"
+      - "traefik.docker.network=lan"
+                
+  express2:
+    privileged: true
+    container_name : res.express2
+    hostname : res.express2
+    build: express-image/
+    networks:
+      - lan
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.express2.entrypoints=http"
+      - "traefik.http.routers.express2.rule=Host(`demo.res.com`) && Path(`/api/students/`)"
+      - "traefik.http.routers.express2.service=addresses"
+      # connect the route to express1:3000
+      - "traefik.http.services.addresses.loadbalancer.server.port=3000"
+      - "traefik.http.services.addresses.loadbalancer.sticky.cookie={}"
+      - "traefik.docker.network=lan"
+      # Create a middleware 
+      - "traefik.http.middlewares.replace-path.replacepath.path=/"
+      # Apply the middleware 
+      - "traefik.http.routers.express2.middlewares=replace-path"
 
-
-    express1:
-        privileged: true
-        container_name : res.express1
-        hostname : res.express1
-        build: express-image/
-        networks:
-            lan:
-                ipv4_address: 173.17.0.7
-    express2:
-        privileged: true
-        container_name : res.express2
-        hostname : res.express2
-        build: express-image/
-        networks:
-            lan:
-                ipv4_address: 173.17.0.8
-
-    reverse-proxy:
-        privileged: true
-        container_name : res.proxy
-        hostname : res.proxy
-        build: apache-reverse-proxy/
-        networks:
-            lan:
-                ipv4_address: 173.17.0.4
-
+  traefik:
+    # The official v2 Traefik docker image
+    image: traefik:v2.4
+    container_name: traefik
+    networks:
+      - lan
+    ports:
+      # The HTTP port
+      - "80:80"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+      
 networks:
   lan:
-    driver: bridge
-    ipam:
-      config:    
-        - subnet: 173.17.0.0/24 
-
-# docker-compose up --detach   
+    name: "lan"
