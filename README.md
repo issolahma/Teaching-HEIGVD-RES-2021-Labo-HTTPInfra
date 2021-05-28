@@ -8,33 +8,23 @@ Juin 2021
 
 Laboratoire fait sur un os Linux (Fedora 33).
 
-## Arborescence du dossier de travail final
-
-````bash
-labo-http
-└── Teaching-HEIGVD-RES-2021-Labo-HTTPInfra
-    ├── apache-reverse-proxy # Dossier conf. Docker
-    ├── docker-images        # Dossier conf. Docker
-    ├── express-image        # Dossier conf. Docker
- 	├── figures              # Images du readme
-    ├── LICENSE
-    |
-    ├── cleanLab			 # Script qui supprime les images et containers créés
-    ├── docker-compose.yml   # Configuration pour la création de touts les containers
-    └── README.md            # Rapport
-
-
-# Création et execuion des conntainers
-docker-compose up --detach
-# Execution de bash dans le container
-docker exec -it <nom_de_la_machine> /bin/bash
-````
-
 
 
 ## Step 1 -  Serveur HTTP statique avec apache httpd
 
 **Branche git**: `fb-apache-static`
+
+
+
+**Objectif**
+
+Implémenter un conteneur Docker apache servant un site web statique.
+
+
+
+**Implémentation**
+
+Implémentation identique à celle du cours.
 
 
 
@@ -92,6 +82,18 @@ https://startbootstrap.com/theme/grayscale
 ## Step 2 - Serveur dynamique HTTP avec express.js
 
 **Branche git**: `fb-express-dynamic`
+
+
+
+**Objectif**
+
+Implémentation du conteneur Docker servant une application express.js
+
+
+
+**Implémentation**
+
+Implémentation identique à celle du cours.
 
 
 
@@ -166,6 +168,18 @@ docker run -d -p 3000:3000 res/express
 ## Step 3 - Reverse proxy avec apache (conf. statique)
 
 **Branche git**: `fb-apache-reverse-proxy`
+
+
+
+**Objectif**
+
+Implémentaion d'un conteneur Docker servant de reverse proxy avec une configuration IP statique.
+
+
+
+**Implémentation**
+
+Implémentation identique à celle du cours, plus une utilisation d'un fichier docker-compose.
 
 
 
@@ -268,10 +282,10 @@ Cela nous permet de les créer tous en même temps avec la garantie que le fichi
 
 - Configuration de l'hôte
 
-Ajouter la ligne ci-dessous au fichier `/etc/hosts` Pour pouvoir accéder au reverse proxy avec le nom de domaine `demo.res.step3.ch`.
+Ajouter la ligne ci-dessous au fichier `/etc/hosts` Pour pouvoir accéder au reverse proxy avec le nom de domaine `demo.res.ch`.
 
 ````
-173.17.0.4  demo.res.step3.ch
+173.17.0.4  demo.res.ch
 ````
 
   ​    
@@ -580,7 +594,6 @@ Après avoir ouvert plusieurs onglets sur `demo.res.ch` nous pouvons voir dans l
   https://httpd.apache.org/docs/2.4/fr/mod/mod_proxy_balancer.html
 
   https://www.inmotionhosting.com/support/server/apache/apache-load-balancer/
-  
 
 
 
