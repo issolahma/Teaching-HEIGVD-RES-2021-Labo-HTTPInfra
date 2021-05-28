@@ -377,8 +377,6 @@ Notre choix s'est porté sur un téléchargement des librairies pour limiter le 
 
 - Résultat
 
-<mark>URL a changer ?</mark>
-
 Grâce au script nous avons un affichage dynamique du contenu obtenu d'un autre container (sous la ligne `HTTP infra lab`).
 
 ![](figures/step4.png)
@@ -390,6 +388,18 @@ Grâce au script nous avons un affichage dynamique du contenu obtenu d'un autre 
 ## Step 5 - Reverse proxy dynamique
 
 **Branche git**: `fb-express-dynamic`
+
+
+
+**Objectif**
+
+Implémenter une méthode pour ne pas avoir une configuration statique des IP du reverse proxy. 
+
+
+
+**Implémentation**
+
+La première implémentation est identique a celle du cours, et nous avons aussi testé le dns de Docker.
 
 
 
@@ -448,6 +458,8 @@ RUN a2ensite 000-* 001-*
 
 
 
+**Option DNS**
+
 Une autre option que nous avions utilisé était l'utilisation du dns de Docker pour la résolution des nom.
 
 Cette solution ne nécessite rien d'autre que le remplacement des adresses IP par les noms d'hôtes des containers cibles.
@@ -475,6 +487,18 @@ Cette solution ne nécessite rien d'autre que le remplacement des adresses IP pa
 ## Bonus - Load balancing et sticky session
 
 **Branche git**: `fb-loadbalance`
+
+
+
+**Objectif**
+
+Implémenter des clusters fournissant le même service, ainsi qu'un suivi de connexion entre le client et le serveur.
+
+
+
+**Implémentation**
+
+L'implémentation a été faite en suivant la documentation d'Apache, ainsi que la lecture de tutoriels.
 
 
 
@@ -580,7 +604,7 @@ RUN a2ensite 000-* 001-*
 
 Ce manager nous permet d'avoir des statistiques sur l'utilisation des différents containers.
 
-Il est possible de le configurer pour limiter son accès avec un login (voir le deuxième lien de la webographie de cette partie). Nous ne l'avons pas implémenté dans le carde de ce projet pour nous faciliter la vie.
+Il est possible de le configurer pour limiter son accès avec un login (voir le deuxième lien de la webographie de cette partie). Nous ne l'avons pas implémenté dans le cadre de ce projet pour des questions de temps.
 
 - Fichier `loadbalancer-manager.conf`
 
