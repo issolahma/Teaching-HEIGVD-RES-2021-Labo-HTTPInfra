@@ -633,13 +633,29 @@ Après avoir ouvert plusieurs onglets sur `demo.res.ch` nous pouvons voir dans l
 
 
 
+- Validation de la sticky session
+
+Nous pouvons observer la présence d'un cookie qui enregistre la route utilisée.
+
+<img src="figures/cookie-apache.png" style="zoom: 70%;" />
+
+
+
 
 
 ## Bonus - Management UI
 
+**Objectif**
+
+Créer/utiliser une application graphique de gestion de containers.
+
+
+
+**Implémentation**
+
 Comme proposé, nous avons choisis d'utiliser une application existante.
 
-Portainer.io permet de gérer facilement son environnement Docker.
+Portainer.io permet de gérer facilement et efficacement son environnement Docker.
 
 https://www.portainer.io/
 
@@ -656,6 +672,12 @@ docker volume create portainer_data
 
 docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 ````
+
+
+
+- Mise à jour de Portainer
+
+Il faut supprimer le container, puis relancr la commande `docker run` ci-dessus.
 
 
 
@@ -756,7 +778,7 @@ Nous définissons les routes qui seront liés a chaque container, ainsi qu'un no
 
 Traefik fera automatiquement le lien entre ce qui arrive sur l'infrastructure sur le port 80 (http), avec l'url définie, vers le bon container.
 
-Il n'y a plus besoin de modifier le fichier `/etc/hosts` de la machine hôte, ni d'utiliser des IPs.
+Il n'y a plus besoin de modifier le fichier `/etc/hosts` de la machine hôte, ni d'utiliser des IPs. C'est pourquoi dans cette configuration nous utilisons `demo.res.com` qui n'est pas listé dans ce fichier.
 
 
 
@@ -764,7 +786,7 @@ Il n'y a plus besoin de modifier le fichier `/etc/hosts` de la machine hôte, ni
 
 Précédemment, nous avons défini la route qui est liée à l'application express.js, et qui est utile pour faire le lien entre le site web et l'application (`demo.res.com/api/students/`).
 
-Le problème est que Traefik renvoie la requête tel-quel au container final, qui reçoit donc la requête: `GET /api/student/` .
+Le problème est que Traefik renvoie la requête tel quel au container final, qui reçoit donc la requête: `GET /api/student/` .
 
 En utilisant un middleware Traefik, on peut modifier la requête avant qu'elle n'arrive au destinataire final.
 
@@ -824,12 +846,21 @@ labels:
 
 ### Sticky session
 
-Cette option est activée en ajoutant un label.
+Cette option est activée en ajoutant un label pour chaque services.
 
 ````
 labels:
-  - "traefik.http.services.addresses.loadbalancer.sticky.cookie={}"
+  - "traefik.http.services.addresses.loadbalancer.sticky.cookie.name=route-express"
 ````
+
+````
+labels:
+  - "traefik.http.services.demores.loadbalancer.sticky.cookie.name=route-http"
+````
+
+
+
+<img src="figures/cookie-traefik.png" style="zoom: 70%;" />
 
 
 
@@ -838,6 +869,22 @@ labels:
 Cette option est celle par défaut, et la seule,  pour le load balancing.
 
 Il n'y a donc rien à faire.
+
+
+
+### Création des clusters
+
+Le fichier `docker-compose.yml` défini trois containers:
+
+- traefik
+- http : site web statique
+- express : application express.js
+
+La commande ci-dessous permet de définir le nombre de containers créés.
+
+````
+docker-compose up --detach --scale http=3 --scale express=2
+````
 
 
 
@@ -850,7 +897,7 @@ Il n'y a donc rien à faire.
 | 172.22.0.2    | 172.22.0.4       | 172.22.0.3 |
 | 172.22.0.5    | 172.22.0.6       |            |
 
-Nous pouvons observer la modification de la requête entre la réception par Traefik et sont renvoi, ainsi que  le fait que les deux IPs de l'application soient utilisées.
+Nous pouvons observer la modification de la requête entre la réception par Traefik (`GET /api/students/`) et sont renvoi (`GET /`), ainsi que  le fait que les deux IPs de l'application soient utilisées alternativement.
 
 
 

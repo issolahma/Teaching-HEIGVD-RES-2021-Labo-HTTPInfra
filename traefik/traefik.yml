@@ -16,9 +16,7 @@ providers:
     watch: true
     # only expose docker with traefik.enable=true
     exposedByDefault: false 
-  
-  #file: "./traefik/traefik.dyn.conf.yml"
-    
+
 
 
 
