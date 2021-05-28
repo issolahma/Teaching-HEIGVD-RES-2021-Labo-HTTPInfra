@@ -179,7 +179,7 @@ Implémentaion d'un conteneur Docker servant de reverse proxy avec une configura
 
 **Implémentation**
 
-Implémentation identique à celle du cours, plus une utilisation d'un fichier docker-compose.
+Implémentation identique à celle du cours, plus une utilisation d'un fichier docker-compose pour la suite du labo.
 
 
 
@@ -218,7 +218,7 @@ RUN a2ensite 000-* 001-*
 
 ````
 <VirtualHost *:80>
-	ServerName demo.res.step3.ch
+	ServerName demo.res.ch
         ProxyPass "/api/students/" "http://173.17.0.3:3000/"
         ProxyPassReverse "/api/students/" "http://173.17.0.3:3000/"
 
@@ -304,6 +304,18 @@ Ajouter la ligne ci-dessous au fichier `/etc/hosts` Pour pouvoir accéder au rev
 
 
 
+**Objectif**
+
+Implémenter un script sur le serveur web statique qui fera une requête Ajax au serveur qui fourni l'application express.js. Le tout via le reverse proxy.
+
+
+
+**Implémentation**
+
+Implémentation identique a cele du cours avec quelques adaptations.
+
+
+
 - Fichier addresses.js
 
 Ce script sera lancé depuis le site web, et fait une requête au reverse proxy sur `/api/students` pour demander les adresses créées sur le container express-js.
@@ -335,7 +347,7 @@ Pour pouvoir recopier le code exemple du cours, nous avons ajouté une classe `s
 
 Nous avons aussi du ajouter un lien vers les librairies JQuery pour que notre script puisse fonctionner.
 
-Notre choix s'est porté sur un téléchargement des librairies pour limiter le poids de notre container.
+Notre choix s'est porté sur un téléchargement des librairies pour limiter le poids de notre containers.
 
 ````html
 <div class="text-center">
