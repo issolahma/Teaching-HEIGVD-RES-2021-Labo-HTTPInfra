@@ -71,7 +71,7 @@ docker run -d -p 8080:80 res/http_infra
 
 - Accès au container depuis le navigateur
 
-<img src="figures/bootstrap-template.png" style="zoom: 50%;" />
+<img src="figures/bootstrap-template.png"  height="300" />
 
 https://startbootstrap.com/theme/grayscale
 
@@ -159,7 +159,7 @@ docker run -d -p 3000:3000 res/express
 
 - Accès au container depuis le navigateur
 
-<img src="figures/express-js.png" style="zoom: 50%;" />
+<img src="figures/express-js.png"  height="300" />
 
 
 
@@ -292,7 +292,7 @@ Ajouter la ligne ci-dessous au fichier `/etc/hosts` Pour pouvoir accéder au rev
 
 - Résultat
 
-<img src="figures/step3.png" style="zoom: 50%;" />
+<img src="figures/step3.png"  height="300" />
 
 
 
@@ -379,7 +379,7 @@ Notre choix s'est porté sur un téléchargement des librairies pour limiter le 
 
 Grâce au script nous avons un affichage dynamique du contenu obtenu d'un autre container (sous la ligne `HTTP infra lab`).
 
-<img src="figures/step4.png" style="zoom: 50%;" />
+<img src="figures/step4.png" height="300" />
 
 
 
@@ -619,7 +619,7 @@ Il est possible de le configurer pour limiter son accès avec un login (voir le 
 
 Après avoir ouvert plusieurs onglets sur `demo.res.ch` nous pouvons voir dans les statistiques, que les deux containers `res.express` ont été utilisés. Ça n'est pas le cas pour les containers `res.http`, mais étant donnée que la configuration est la même, et que le site ne demande pas beaucoup de ressources, nous pouvons valider le load balancer (qui sera géré autrement plus tard)
 
-<img src="figures/lb-manager.png" style="zoom: 50%;" />
+<img src="figures/lb-manager.png" height="350" />
 
 
 
@@ -637,7 +637,7 @@ Après avoir ouvert plusieurs onglets sur `demo.res.ch` nous pouvons voir dans l
 
 Nous pouvons observer la présence d'un cookie qui enregistre la route utilisée.
 
-<img src="figures/cookie-apache.png" style="zoom: 50%;" />
+<img src="figures/cookie-apache.png" height="350" />
 
 
 
@@ -659,7 +659,7 @@ Portainer.io permet de gérer facilement et efficacement son environnement Docke
 
 https://www.portainer.io/
 
-<img src="figures/portainer.png" style="zoom: 50%;" />
+<img src="figures/portainer.png" height="300" />
 
 
 
@@ -806,11 +806,11 @@ Nous remplaçons `/api/students/` par `/`.
 
 - Traefik routers
 
-<img src="figures/traefik-rouers.png" style="zoom: 50%;" />
+<img src="figures/traefik-rouers.png" height="100" />
 
 
 
-<img src="figures/traefik-route-express.png" style="zoom: 50%;" />
+<img src="figures/traefik-route-express.png" height="300" />
 
 
 
@@ -840,7 +840,7 @@ labels:
 
 <img src="figures/traefik-services.png" style="zoom: 50%;" />
 
-<img src="figures/traefik-services-express.png" style="zoom: 50%;" />
+<img src="figures/traefik-services-express.png" height="300" />
 
 
 
@@ -860,7 +860,7 @@ labels:
 
 
 
-<img src="figures/cookie-traefik.png" style="zoom: 50%;" />
+<img src="figures/cookie-traefik.png" height="350" />
 
 
 
@@ -892,7 +892,7 @@ docker-compose up --detach --scale http=3 --scale express=2
 
 (Sauf sticky session, car l'ajout de la sticky session rend la validation des autres point plus difficile vu que le navigateur reste sur son cookie.)
 
-<img src="figures/ws.png" style="zoom: 50%;" />
+<img src="figures/ws.png" height="300" />
 
 | IPs sites web | IPs applications | IP Traefik |
 | ------------- | ---------------- | ---------- |
