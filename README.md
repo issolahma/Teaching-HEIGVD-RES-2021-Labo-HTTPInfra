@@ -670,7 +670,7 @@ https://documentation.portainer.io/v2.0/deploy/ceinstalldocker/
 ````
 docker volume create portainer_data
 
-docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always --pull=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 ````
 
 
@@ -888,7 +888,9 @@ docker-compose up --detach --scale http=3 --scale express=2
 
 
 
-### Validation
+### Validation 
+
+(Sauf sticky session, car l'ajout de la sticky session rend la validation des autres point plus difficile vu que le navigateur reste sur son cookie.)
 
 <img src="figures/ws.png" style="zoom: 70%;" />
 
@@ -897,7 +899,4 @@ docker-compose up --detach --scale http=3 --scale express=2
 | 172.22.0.2    | 172.22.0.4       | 172.22.0.3 |
 | 172.22.0.5    | 172.22.0.6       |            |
 
-Nous pouvons observer la modification de la requête entre la réception par Traefik (`GET /api/students/`) et sont renvoi (`GET /`), ainsi que  le fait que les deux IPs de l'application soient utilisées alternativement.
-
-
-
+Nous pouvons observer la modification de la requête entre la réception par Traefik (`GET /api/students/`) et sont renvoi (`GET /`), ainsi que  le fait que les deux IPs de l'application sont utilisées alternativement (Round Robin).
