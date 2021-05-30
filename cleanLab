@@ -1,9 +1,0 @@
-#!/bin/bash
-echo "cleaning..."
-docker rm -f res_http_one res_http_two res_proxy res_express_one res_express_two
-docker image rm -f teaching-heigvd-res-2021-labo-httpinfra_reverse-proxy \
-		   teaching-heigvd-res-2021-labo-httpinfra_express1 \
-                   teaching-heigvd-res-2021-labo-httpinfra_express2 \
-		   teaching-heigvd-res-2021-labo-httpinfra_http1 \
-                   teaching-heigvd-res-2021-labo-httpinfra_http2
-echo "done :)"
